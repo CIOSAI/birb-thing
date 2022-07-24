@@ -26,7 +26,6 @@ gravity = 200.0
 air_friction = 0.099
 glide_amp = 0.4
 glide_conversion_rate = 0.232
-dive_amp = 8.0
 body_path = NodePath("..")
 flap_facing_n = 6.0
 flap_facing_cutoff = -0.752
