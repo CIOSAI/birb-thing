@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenes/PlayerMovement.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/PlayerCamera.tscn" type="PackedScene" id=2]
@@ -7,6 +7,9 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 4.85349 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0.107843 ), 0.0, 0.720375, 0, 0, Vector2( 0.872781, 1 ), 0.634543, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -18,17 +21,14 @@ shape = SubResource( 1 )
 
 [node name="PlayerMovement" parent="." instance=ExtResource( 1 )]
 ground_friction = 0.381
-hori_friction = 0.012
-jump_halt = Vector2( 1, 0.4 )
-accel = 2800.0
-flapforce = 4800.0
-gravity = 200.0
-air_friction = 0.099
+gravity = 2000.0
+air_friction = 0.355
 glide_amp = 0.4
-glide_conversion_rate = 0.232
+lambda = 1.6
+kappa = 1.571
+psi = 0.794
+LC_function = SubResource( 2 )
 body_path = NodePath("..")
-flap_facing_n = 6.0
-flap_facing_cutoff = -0.752
 
 [node name="Stick" type="Position2D" parent="."]
 

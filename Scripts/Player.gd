@@ -23,7 +23,7 @@ func _process(delta):
 		display.FACING.LEFT
 	)
 	display.set_heading(-movement.vel)
-	display.wing_open(movement.is_glide_dive_held()&&movement.glide_dive)
+	display.wing_open(movement.gliding)
 	display.set_feet(clamp(get_speed()*2.0, 0.0, 1.0))
 	display.set_tail_dir(-prev_vel)
 	prev_vel = lerp(prev_vel, movement.vel, tail_lerp)
