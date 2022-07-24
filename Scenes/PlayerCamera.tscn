@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/PlayerCamera.gd" type="Script" id=1]
+
+[node name="PlayerCamera" type="Camera2D"]
+pause_mode = 2
+current = true
+smoothing_enabled = true
+smoothing_speed = 7.0
+script = ExtResource( 1 )
+shake_rotate = 0.647
+shake_offset = Vector2( 100, 100 )
+decay = 0.236
+
+[node name="Tween" type="Tween" parent="."]

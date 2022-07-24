@@ -1,0 +1,47 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/PlayerMovement.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/PlayerCamera.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/PlayerDisplay.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 4.85349 )
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 2
+script = ExtResource( 4 )
+tail_lerp = 0.092
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="PlayerMovement" parent="." instance=ExtResource( 1 )]
+ground_friction = 0.381
+hori_friction = 0.012
+jump_halt = Vector2( 1, 0.4 )
+accel = 2800.0
+flapforce = 4800.0
+gravity = 200.0
+air_friction = 0.099
+glide_amp = 0.4
+glide_conversion_rate = 0.232
+dive_amp = 8.0
+body_path = NodePath("..")
+flap_facing_n = 6.0
+flap_facing_cutoff = -0.752
+
+[node name="Stick" type="Position2D" parent="."]
+
+[node name="PlayerCamera" parent="Stick" instance=ExtResource( 2 )]
+smoothing_enabled = false
+
+[node name="PlayerDisplay" parent="." instance=ExtResource( 3 )]
+flap_down_dur = 0.252
+flap_up_dur = 0.166
+open_tuck_dur = 0.283
+feet_dur = 0.155
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="flap" from="PlayerMovement" to="." method="_on_PlayerMovement_flap"]

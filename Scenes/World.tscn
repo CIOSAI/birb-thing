@@ -1,0 +1,82 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Sprites/clouds/cloud1.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Sprites/clouds/cloud5.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Sprites/clouds/cloud7.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Sprites/clouds/cloud9.png" type="Texture" id=5]
+[ext_resource path="res://Scripts/World.gd" type="Script" id=6]
+[ext_resource path="res://Assets/Sprites/clouds/cloud3.png" type="Texture" id=7]
+
+[node name="World" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2( 5940, 3240 )
+
+[node name="ColorRect" type="ColorRect" parent="ParallaxBackground/ParallaxLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 5940.0
+margin_bottom = 3240.0
+color = Color( 0.517647, 0.752941, 0.815686, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource( 2 )
+
+[node name="Sprite9" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 2778.76, 1834.89 )
+texture = ExtResource( 2 )
+
+[node name="Sprite2" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 935.908, 398.807 )
+texture = ExtResource( 3 )
+
+[node name="Sprite6" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 392.237, 2588.59 )
+texture = ExtResource( 3 )
+
+[node name="Sprite3" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 407.076, 979.424 )
+texture = ExtResource( 4 )
+
+[node name="Sprite10" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 5156.65, 624.528 )
+texture = ExtResource( 4 )
+
+[node name="Sprite7" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 4794.2, 1689.22 )
+texture = ExtResource( 4 )
+
+[node name="Sprite4" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 2081.66, 523.951 )
+texture = ExtResource( 5 )
+
+[node name="Sprite11" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 3674.92, 584.359 )
+texture = ExtResource( 5 )
+
+[node name="Sprite8" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 4037.37, 2577.82 )
+texture = ExtResource( 5 )
+
+[node name="Sprite5" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 1439.83, 1399.87 )
+texture = ExtResource( 7 )
+
+[node name="Sprite13" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 3990.06, 1426.8 )
+texture = ExtResource( 7 )
+
+[node name="Sprite12" type="Sprite" parent="ParallaxBackground/ParallaxLayer"]
+position = Vector2( 2172.27, 3053.53 )
+texture = ExtResource( 7 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( -48.9164, -96.0276 )
+scale = Vector2( 3, 3 )

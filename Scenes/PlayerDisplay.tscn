@@ -1,0 +1,90 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Scenes/Chain.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scripts/PlayerDisplay.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Sprites/bird atlas.png" type="Texture" id=3]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 3 )
+region = Rect2( 8, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 0, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 3 )
+region = Rect2( 0, 16, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 3 )
+region = Rect2( 24, 0, 8, 8 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 3 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 3 )
+region = Rect2( 48, 0, 16, 16 )
+
+[node name="PlayerDisplay" type="Node2D"]
+script = ExtResource( 2 )
+
+[node name="Model" type="Node2D" parent="."]
+scale = Vector2( 1.74446, 1.74446 )
+
+[node name="ModelTransform" type="Node2D" parent="Model"]
+
+[node name="AnchorBody" type="Node2D" parent="Model/ModelTransform"]
+
+[node name="Body" type="Sprite" parent="Model/ModelTransform/AnchorBody"]
+rotation = -1.07338
+z_index = 50
+texture = SubResource( 1 )
+
+[node name="AnchorHead" type="Node2D" parent="Model/ModelTransform/AnchorBody/Body"]
+position = Vector2( -5, -9 )
+
+[node name="Head" type="Sprite" parent="Model/ModelTransform/AnchorBody/Body/AnchorHead"]
+z_index = 1
+texture = SubResource( 2 )
+offset = Vector2( -1, 1 )
+
+[node name="AnchorTail" type="Node2D" parent="Model/ModelTransform/AnchorBody/Body"]
+position = Vector2( 0, 4 )
+
+[node name="Tail" type="Sprite" parent="Model/ModelTransform/AnchorBody/Body/AnchorTail"]
+rotation = -0.535816
+z_index = -1
+texture = SubResource( 3 )
+offset = Vector2( 7, 7 )
+
+[node name="AnchorFeet" type="Node2D" parent="Model/ModelTransform/AnchorBody/Body"]
+position = Vector2( -3, 2 )
+rotation = -0.71384
+
+[node name="Feet" type="Sprite" parent="Model/ModelTransform/AnchorBody/Body/AnchorFeet"]
+z_index = -1
+texture = SubResource( 4 )
+offset = Vector2( -2, 2 )
+
+[node name="AnchorWings" type="Node2D" parent="Model/ModelTransform/AnchorBody/Body"]
+position = Vector2( -1, -7 )
+
+[node name="BackWing" type="Sprite" parent="Model/ModelTransform/AnchorBody/Body/AnchorWings"]
+position = Vector2( -1, -1 )
+z_index = -1
+texture = SubResource( 5 )
+offset = Vector2( 7, 7 )
+
+[node name="FrontWing" type="Sprite" parent="Model/ModelTransform/AnchorBody/Body/AnchorWings"]
+texture = SubResource( 6 )
+offset = Vector2( 7, 7 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="FlapTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Chain" parent="." instance=ExtResource( 1 )]
