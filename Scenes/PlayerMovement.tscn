@@ -6,3 +6,5 @@
 script = ExtResource( 1 )
 accel = 200.0
 gravity = 40.0
+
+[node name="Tween" type="Tween" parent="."]

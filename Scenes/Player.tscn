@@ -32,6 +32,7 @@ gravity = 800.0
 air_friction = 0.082
 glide_amp = 0.2
 glide_conversion_rate = 0.488
+turn_dur = 1.072
 body_path = NodePath("..")
 xmod = SubResource( 2 )
 ymod = SubResource( 3 )

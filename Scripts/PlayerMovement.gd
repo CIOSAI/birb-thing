@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var tw = $"Tween"
+
 export(float, 0.0, 1.0) var ground_friction:float
 export(float, 0.0, 1.0) var hori_friction:float
 export var accel:float
@@ -8,6 +10,7 @@ export var gravity:float
 export(float, 0.0, 1.0) var air_friction:float
 export var glide_amp:float
 export(float, 0.0, 1.0) var glide_conversion_rate:float
+export(float, 0.0, 2.0) var turn_dur:float
 export var body_path:NodePath
 
 export var xmod:Curve
@@ -57,9 +60,20 @@ func fall():
 	vel.y+=gravity
 	if vel.y>0: vel.y*=pow((1.0-air_friction), 1.0/air_friction_scale)
 
+func tween_about_done()->bool:
+	return (!tw.is_active())||(tw.tell() / turn_dur > 0.7)
+
 func flip():
-	if Input.is_action_just_pressed("Down"):
-		vel.x *= -1
+	if Input.is_action_just_pressed("Down")&&tween_about_done():
+		tw.stop_all()
+		tw.interpolate_property(
+			self, "vel:x",
+			vel.x, -vel.x,
+			turn_dur, Tween.TRANS_CIRC, Tween.EASE_OUT
+		)
+		tw.start()
+	if Input.is_action_just_pressed("Glide"):
+		tw.stop_all()
 
 func move():
 	if body.is_on_floor()||body.is_on_ceiling():
