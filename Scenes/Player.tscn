@@ -49,4 +49,8 @@ feet_dur = 0.155
 
 [node name="Tween" type="Tween" parent="."]
 
-[connection signal="flap" from="PlayerMovement" to="." method="_on_PlayerMovement_flap"]
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

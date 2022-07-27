@@ -22,6 +22,7 @@ func _process(delta):
 		if movement.vel.x<0 else 
 		display.FACING.LEFT
 	)
+	display.set_looking(-movement.vel.x)
 	display.set_heading(-movement.vel)
 	display.wing_open(movement.glide_dive)
 	display.set_feet(clamp(get_speed()*2.0, 0.0, 1.0))
@@ -35,6 +36,6 @@ func _process(delta):
 	camera.zoom_to(1+get_speed()*2)
 
 
-func _on_PlayerMovement_flap(dir):
-	display.set_looking(int(-dir))
-	display.wing_flap()
+func _on_Timer_timeout():
+	if movement.flapping:
+		display.wing_flap()

@@ -16,7 +16,8 @@ export var ymod:Curve
 var body:KinematicBody2D
 var prev_vel:Vector2 = Vector2.ZERO
 var vel:Vector2 = Vector2.ZERO
-var glide_dive:bool = true
+var glide_dive:bool = false
+var flapping:bool = false
 var air_friction_scale:float = 1.0
 
 signal flap(dir)
@@ -31,14 +32,16 @@ func commit_flap(dir=1, amp=1):
 		-ymod.interpolate(0.5+dotted/2.0)
 	)
 	vel += interpolated*Vector2(sign(vel.x), 1.0)*Vector2(accel, flapforce)
-	emit_signal("flap", dir)
 
 func flap():
 	if Input.is_action_pressed("Flap"):
 		commit_flap(sign(vel.x))
+		flapping = true
+	else:
+		flapping = false
 
 func vert_fric():
-	if Input.is_action_pressed("Up"):
+	if Input.is_action_pressed("Glide"):
 		glide_dive = true
 	else:
 		glide_dive = false
@@ -48,23 +51,30 @@ func vert_fric():
 func fall():
 	vert_fric()
 	
-	if Input.is_action_pressed("Up"):
+	if Input.is_action_pressed("Glide"):
 		vel.x += sign(vel.x+0.0001)*max(vel.y, 0.0)*glide_conversion_rate
 	
 	vel.y+=gravity
 	if vel.y>0: vel.y*=pow((1.0-air_friction), 1.0/air_friction_scale)
+
+func flip():
+	if Input.is_action_just_pressed("Down"):
+		vel.x *= -1
 
 func move():
 	if body.is_on_floor()||body.is_on_ceiling():
 		vel.y = 0.0
 	if body.is_on_wall():
 		vel.x = 0.0
-	if body.is_on_floor():
-		vel.x *= 1.0-ground_friction
 	
 	flap()
 	fall()
-	vel.x *= 1.0-hori_friction
+	flip()
+	
+	if body.is_on_floor():
+		vel.x *= 1.0-ground_friction
+	else:
+		vel.x *= 1.0-hori_friction
 
 func get_acceleration()->Vector2:
 	return vel-prev_vel
