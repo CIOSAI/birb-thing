@@ -2,18 +2,16 @@ extends Node2D
 
 export(float, 0.0, 1.0) var ground_friction:float
 export(float, 0.0, 1.0) var hori_friction:float
-export var jump_halt:Vector2
 export var accel:float
 export var flapforce:float
 export var gravity:float
 export(float, 0.0, 1.0) var air_friction:float
 export var glide_amp:float
 export(float, 0.0, 1.0) var glide_conversion_rate:float
-export var dive_amp:float
 export var body_path:NodePath
 
-export(float, 1.0, 10.0) var flap_facing_n:float
-export(float, -0.9999, 0.9999) var flap_facing_cutoff:float
+export var xmod:Curve
+export var ymod:Curve
 
 var body:KinematicBody2D
 var prev_vel:Vector2 = Vector2.ZERO
@@ -26,35 +24,18 @@ signal flap(dir)
 func _ready():
 	body = get_node(body_path)
 
-func range_morph(x:float, n:float, dir:float)->float:
-	return (x+dir-(dir/n))*n
-
-func flap_facing_morph(x:float)->float:
-	if x<flap_facing_cutoff:
-		return pow(
-			range_morph(x, 1.0/(1.0+flap_facing_cutoff), 1.0)+1.0
-			, flap_facing_n)-1.0
-	else:
-		return 1.0-pow(
-			-range_morph(x, 1.0/(1.0-flap_facing_cutoff), -1.0)+1.0
-			, flap_facing_n) 
-
-func flap_facing()->float:
-	return flap_facing_morph(vel.normalized().dot(Vector2.UP))
-
 func commit_flap(dir=1, amp=1):
-	vel.y += -flapforce*amp * flap_facing()
-	vel.x += dir*accel*amp * (1.0-abs(flap_facing()/2.0))
+	var dotted:float = vel.normalized().dot(Vector2.UP)
+	var interpolated:Vector2 = Vector2(
+		xmod.interpolate(0.5+dotted/2.0),
+		-ymod.interpolate(0.5+dotted/2.0)
+	)
+	vel += interpolated*Vector2(sign(vel.x), 1.0)*Vector2(accel, flapforce)
 	emit_signal("flap", dir)
 
 func flap():
-	if Input.is_action_just_pressed("Left"):
-		commit_flap(-1)
-	if Input.is_action_just_pressed("Right"):
-		commit_flap(1)
-	if Input.is_action_just_released("Left")||Input.is_action_just_released("Right"):
-		if vel.y<0:
-			vel *= jump_halt
+	if Input.is_action_pressed("Flap"):
+		commit_flap(sign(vel.x))
 
 func vert_fric():
 	if Input.is_action_pressed("Up"):

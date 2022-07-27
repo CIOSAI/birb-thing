@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Scenes/PlayerMovement.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scenes/PlayerCamera.tscn" type="PackedScene" id=2]
@@ -7,6 +7,13 @@
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 10, 4.85349 )
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 0 ), 0.0, 0.0, 0, 0, Vector2( 0.657895, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 1 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="Curve" id=3]
+min_value = -1.0
+_data = [ Vector2( 0, -1 ), 0.0, 0.0, 0, 0, Vector2( 0.50329, 1 ), 10.9804, 0.0, 0, 0, Vector2( 1, 0.0367647 ), 0.0, 0.0, 0, 0 ]
 
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 2
@@ -19,17 +26,15 @@ shape = SubResource( 1 )
 [node name="PlayerMovement" parent="." instance=ExtResource( 1 )]
 ground_friction = 0.381
 hori_friction = 0.025
-jump_halt = Vector2( 1, 0.4 )
-accel = 2800.0
-flapforce = 4800.0
-gravity = 1200.0
+accel = 800.0
+flapforce = 1200.0
+gravity = 800.0
 air_friction = 0.082
-glide_amp = 0.1
+glide_amp = 0.2
 glide_conversion_rate = 0.488
-dive_amp = 8.0
 body_path = NodePath("..")
-flap_facing_n = 6.0
-flap_facing_cutoff = -0.752
+xmod = SubResource( 2 )
+ymod = SubResource( 3 )
 
 [node name="Stick" type="Position2D" parent="."]
 
