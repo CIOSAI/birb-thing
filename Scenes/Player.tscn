@@ -18,14 +18,14 @@ shape = SubResource( 1 )
 
 [node name="PlayerMovement" parent="." instance=ExtResource( 1 )]
 ground_friction = 0.381
-hori_friction = 0.012
+hori_friction = 0.018
 jump_halt = Vector2( 1, 0.4 )
 accel = 2800.0
 flapforce = 4800.0
-gravity = 200.0
-air_friction = 0.099
-glide_amp = 0.4
-glide_conversion_rate = 0.232
+gravity = 1200.0
+air_friction = 0.061
+glide_amp = 0.1
+glide_conversion_rate = 0.488
 dive_amp = 8.0
 body_path = NodePath("..")
 flap_facing_n = 6.0

@@ -62,28 +62,19 @@ func flap():
 	if Input.is_action_just_released("Left")||Input.is_action_just_released("Right"):
 		if vel.y<0:
 			vel *= jump_halt
-	
-#	print(vel.normalized().dot(Vector2.UP))
 
 func vert_fric():
-	if Input.is_action_just_pressed("Up"):
+	if Input.is_action_pressed("Up"):
 		glide_dive = true
-		air_friction_scale = glide_amp
-	if Input.is_action_just_pressed("Down"):
+	else:
 		glide_dive = false
-		air_friction_scale = dive_amp
-	if Input.is_action_just_released("Up")&&glide_dive:
-		air_friction_scale = 1.0
-	if Input.is_action_just_released("Down")&&(!glide_dive):
-		air_friction_scale = 1.0
-
-func is_glide_dive_held():
-	return air_friction_scale != 1.0
+	
+	air_friction_scale = glide_amp if glide_dive else 1.0
 
 func fall():
 	vert_fric()
 	
-	if Input.is_action_pressed("Up")&&glide_dive:
+	if Input.is_action_pressed("Up"):
 		vel.x += sign(vel.x+0.0001)*max(vel.y, 0.0)*glide_conversion_rate
 	
 	vel.y+=gravity
