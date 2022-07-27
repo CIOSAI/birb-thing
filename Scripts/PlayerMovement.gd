@@ -48,13 +48,6 @@ func commit_flap(dir=1, amp=1):
 	emit_signal("flap", dir)
 
 func flap():
-	if body.is_on_floor()||body.is_on_ceiling():
-		vel.y = 0.0
-	if body.is_on_wall():
-		vel.x = 0.0
-	if body.is_on_floor():
-		vel.x *= 1.0-ground_friction
-	
 	if Input.is_action_just_pressed("Left"):
 		commit_flap(-1)
 	if Input.is_action_just_pressed("Right"):
@@ -81,6 +74,13 @@ func fall():
 	if vel.y>0: vel.y*=pow((1.0-air_friction), 1.0/air_friction_scale)
 
 func move():
+	if body.is_on_floor()||body.is_on_ceiling():
+		vel.y = 0.0
+	if body.is_on_wall():
+		vel.x = 0.0
+	if body.is_on_floor():
+		vel.x *= 1.0-ground_friction
+	
 	flap()
 	fall()
 	vel.x *= 1.0-hori_friction
